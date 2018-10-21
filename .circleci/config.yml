@@ -41,7 +41,7 @@ jobs:
     - run:
         name: Test image
         command: |
-          docker run -itd --name test http-echo:test
+          docker run -itd --name test -p 8080:8080 http-echo:test
           curl http://localhost:8080/healthz || exit
           docker stop test
           docker rm test
