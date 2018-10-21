@@ -43,5 +43,6 @@ jobs:
     - run:
         name: Push image
         command: |
+          TAG=$(git rev-parse --short HEAD)
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push landerson61/http-echo:$TAG
