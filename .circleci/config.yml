@@ -39,10 +39,14 @@ jobs:
         name: Build image
         command: docker build -t http-echo:test .
     - run:
+        name: Run test image
+        command: docker run -itd --name test -p 8080:8080 http-echo:test
+    - run:
         name: Test image
-        command: |
-          docker run -itd --name test -p 8080:8080 http-echo:test
-          curl http://localhost:8080/healthz || exit
+        command: curl http://localhost:8080/healthz
+    - run:
+        name: Tear down test image
+        command:
           docker stop test
           docker rm test
     - run:
