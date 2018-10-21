@@ -48,7 +48,7 @@ func main() {
 
 		next := os.Getenv("NEXT")
 		if next == "" {
-			fd := fullData{text, nil}
+			fd := fullData{text, ""}
 			if err := tmpl.Execute(w, fd); err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
