@@ -20,10 +20,12 @@ type fullData struct {
 }
 
 func main() {
-	tmpl, tmplErr := template.ParseFiles("./tpl/index.html")
-	if tmplErr != nil {
-		panic(tmplErr)
+
+	tmpl, err := template.New("index").Parse("<!DOCTYPE html><html lang=\"en\" style=\"background-color:#00C176\"><head><meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"\"><meta name=\"author\" content=\"\"><title>v1.0.0</title></head><body style=\"display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-family:sans-serif;font-size:6rem;margin:0;letter-spacing:-0.1em\"><h1>{{.Txt}} {{if .Bdy}} {{.Bdy}} {{end}}</h1></body></html>")
+	if err != nil {
+		panic(err)
 	}
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
@@ -80,6 +82,11 @@ func main() {
 			}
 		}
 	})
+
+	mux.HandleFunc("/healthz", func(w http.ResponseWriter, request *http.Request) {
+		fmt.Fprintf(w, "%s", "OK")
+	})
+
 	port := ":8080"
 	log.Printf("Listening on %s....", port)
 	http.ListenAndServe(port, mux)
