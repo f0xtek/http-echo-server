@@ -16,7 +16,7 @@ var tmpl *template.Template
 
 type fullData struct {
 	Txt string
-	Bdy []byte
+	Bdy string
 }
 
 func main() {
@@ -76,7 +76,7 @@ func main() {
 			defer resp.Body.Close()
 			body, err := ioutil.ReadAll(resp.Body)
 
-			fd := fullData{text, body}
+			fd := fullData{text, string(body)}
 			if fdErr := tmpl.Execute(w, fd); fdErr != nil {
 				http.Error(w, fdErr.Error(), http.StatusInternalServerError)
 			}

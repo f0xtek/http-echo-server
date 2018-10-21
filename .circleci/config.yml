@@ -40,9 +40,11 @@ jobs:
         command: |
           TAG=$(git rev-parse --short HEAD)
           docker build -t landerson61/http-echo:$TAG .
+          docker tag landerson61/http-echo:$TAG landerson61/http-echo:$CIRCLE_TAG
     - run:
         name: Push image
         command: |
           TAG=$(git rev-parse --short HEAD)
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push landerson61/http-echo:$TAG
+          docker push landerson61/http-echo:$CIRCLE_TAG
