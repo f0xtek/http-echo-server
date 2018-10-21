@@ -36,22 +36,22 @@ jobs:
 
     # specify any bash command here prefixed with `run: `
     - run:
-      name: Build image
-      command: docker build -t http-echo:test .
+        name: Build image
+        command: docker build -t http-echo:test .
     - run:
-      name: Test image
-      command: |
-        docker run -itd --name test http-echo:test
-        curl http://localhost:8080/healthz || exit
-        docker stop test
-        docker rm test
+        name: Test image
+        command: |
+          docker run -itd --name test http-echo:test
+          curl http://localhost:8080/healthz || exit
+          docker stop test
+          docker rm test
     - run:
-      name: Tag image
-      command: |
-        TAG=$(git rev-parse --short HEAD)
-        docker tag http-echo:test landerson61/http-echo:$TAG
+        name: Tag image
+        command: |
+          TAG=$(git rev-parse --short HEAD)
+          docker tag http-echo:test landerson61/http-echo:$TAG
     - run:
-      name: Push image
-      command: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASS
-        docker push landerson61/http-echo:$TAG
+        name: Push image
+        command: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          docker push landerson61/http-echo:$TAG
