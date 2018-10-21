@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -12,19 +11,19 @@ import (
 	"time"
 )
 
-var tmpl *template.Template
+//var tmpl *template.Template
 
-type fullData struct {
-	Txt string
-	Bdy string
-}
+//type fullData struct {
+//	Txt string
+//	Bdy string
+//}
 
 func main() {
 
-	tmpl, err := template.New("index").Parse("<!DOCTYPE html><html lang=\"en\" style=\"background-color:#00C176\"><head><meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"\"><meta name=\"author\" content=\"\"><title>v1.0.0</title></head><body style=\"display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-family:sans-serif;font-size:6rem;margin:0;letter-spacing:-0.1em\"><h1>{{.Txt}} {{if .Bdy}} {{.Bdy}} {{end}}</h1></body></html>")
-	if err != nil {
-		panic(err)
-	}
+	//tmpl, err := template.New("index").Parse("<!DOCTYPE html><html lang=\"en\" style=\"background-color:#00C176\"><head><meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"\"><meta name=\"author\" content=\"\"><title>v1.0.0</title></head><body style=\"display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-family:sans-serif;font-size:6rem;margin:0;letter-spacing:-0.1em\"><h1>{{.Txt}} {{if .Bdy}} {{.Bdy}} {{end}}</h1></body></html>")
+	//if err != nil {
+	//	panic(err)
+	//}
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -48,10 +47,11 @@ func main() {
 
 		next := os.Getenv("NEXT")
 		if next == "" {
-			fd := fullData{text, ""}
-			if err := tmpl.Execute(w, fd); err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-			}
+			//fd := fullData{text, ""}
+			//if err := tmpl.Execute(w, fd); err != nil {
+			//	http.Error(w, err.Error(), http.StatusInternalServerError)
+			//}
+			fmt.Fprintf(w, "%s", text)
 		} else {
 			// initialize HTTP client
 			client := &http.Client{}
@@ -75,11 +75,12 @@ func main() {
 			}
 			defer resp.Body.Close()
 			body, err := ioutil.ReadAll(resp.Body)
+			fmt.Fprintf(w, "%s %s", text, body)
 
-			fd := fullData{text, string(body)}
-			if fdErr := tmpl.Execute(w, fd); fdErr != nil {
-				http.Error(w, fdErr.Error(), http.StatusInternalServerError)
-			}
+			//fd := fullData{text, string(body)}
+			//if fdErr := tmpl.Execute(w, fd); fdErr != nil {
+			//	http.Error(w, fdErr.Error(), http.StatusInternalServerError)
+			//}
 		}
 	})
 
