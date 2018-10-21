@@ -1,0 +1,6 @@
+{
+	"ImportPath": "github.com/drmarconi/http-echo",
+	"GoVersion": "go1.11",
+	"GodepVersion": "v80",
+	"Deps": []
+}
