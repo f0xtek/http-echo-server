@@ -48,3 +48,11 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push landerson61/http-echo:$TAG
           docker push landerson61/http-echo:$CIRCLE_TAG
+workflows:
+  version: 2
+  tagged-build:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
