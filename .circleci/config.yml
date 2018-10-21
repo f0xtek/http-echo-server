@@ -37,23 +37,9 @@ jobs:
     # specify any bash command here prefixed with `run: `
     - run:
         name: Build image
-        command: docker build -t http-echo:test .
-    - run:
-        name: Run test image
-        command: docker run -itd --name test -p 30000:8080 http-echo:test
-    - run:
-        name: Test image
-        command: curl http://localhost:30000/healthz
-    - run:
-        name: Tear down test image
-        command: |
-          docker stop test
-          docker rm test
-    - run:
-        name: Tag image
         command: |
           TAG=$(git rev-parse --short HEAD)
-          docker tag http-echo:test landerson61/http-echo:$TAG
+          docker build -t landerson61/http-echo:$TAG .
     - run:
         name: Push image
         command: |
