@@ -40,13 +40,13 @@ jobs:
         command: docker build -t http-echo:test .
     - run:
         name: Run test image
-        command: docker run -itd --name test -p 8080:8080 http-echo:test
+        command: docker run -itd --name test -p 30000:8080 http-echo:test
     - run:
         name: Test image
-        command: curl http://localhost:8080/healthz
+        command: curl http://localhost:30000/healthz
     - run:
         name: Tear down test image
-        command:
+        command: |
           docker stop test
           docker rm test
     - run:
