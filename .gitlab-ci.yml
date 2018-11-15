@@ -5,6 +5,7 @@ services:
 
 stages:
 - build
+- push
 
 build:
   stage: build
