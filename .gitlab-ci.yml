@@ -12,6 +12,8 @@ build:
   script:
     - docker image build -t landerson61/$CI_PROJECT_NAME:$CI_COMMIT_TAG .
     - docker image tag landerson61/$CI_PROJECT_NAME:$CI_COMMIT_TAG landerson61/$CI_PROJECT_NAME:latest
+  only:
+    - tags
 
 push:
   stage: push
