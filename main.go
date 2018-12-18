@@ -58,7 +58,7 @@ func main() {
 			req, _ := http.NewRequest("GET", "http://"+next+"/", nil)
 
 			// get headers
-			for k, _ := range r.Header {
+			for k := range r.Header {
 				// set tracing headers
 				for _, otHeader := range otHeaders {
 					if strings.ToLower(otHeader) == strings.ToLower(k) {
