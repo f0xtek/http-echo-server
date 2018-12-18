@@ -1,0 +1,6 @@
+---
+replicas: 3
+image:
+  version: 1.2.0
+ingress:
+  domain: local

@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "name" . }}
+spec:
+  selector:
+    matchLabels:
+      name: {{ template "name" . }}
+  replicas: {{ .Values.replicas }}
+  template:
+    metadata:
+      labels:
+        name: {{ template "name" . }}
+    spec:
+      containers:
+      - name: http-echo
+        image: landerson61/http-echo:{{ printf "%s" .Values.image.version }}
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
